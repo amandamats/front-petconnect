@@ -8,22 +8,37 @@ export function Login() {
   const [error, setError] = useState('');
   const { login } = useAuth();
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!username || !password) {
-      setError('Por favor, preencha usuário e senha.');
+  const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+
+  if (!username || !password) {
+    setError('Por favor, preencha usuário e senha.');
+    return;
+  }
+
+  try {
+    const token = btoa(`${username}:${password}`);
+
+    const response = await fetch(
+      'http://localhost:8080/adotantes',
+      {
+        headers: {
+          Authorization: `Basic ${token}`
+        }
+      }
+    );
+
+    if (!response.ok) {
+      setError('Usuário ou senha inválidos.');
       return;
     }
-    
-    // Create base64 token
-    const token = btoa(`${username}:${password}`);
-    
-    // Usually we would validate the token against an endpoint here.
-    // For Basic Auth, we'll just save it and let the first protected request validate it.
-    // However, it's better to do a quick check, but the prompt says:
-    // "O frontend deve ter uma tela de login simples (usuário/senha) que armazena as credenciais..."
+
     login(token);
-  };
+
+  } catch {
+    setError('Não foi possível conectar ao servidor.');
+  }
+};
 
   return (
     <div className="min-h-[80vh] flex items-center justify-center">
