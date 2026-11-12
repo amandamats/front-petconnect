@@ -1,0 +1,22 @@
+{
+  "content": [
+    {
+      "id": 1,
+      "nome": "Rex",
+      "especie": "Cachorro",
+      "idade": 3,
+      "adotado": false,
+      "status": "DISPONIVEL"
+    },
+    {
+      "id": 2,
+      "nome": "Mimi",
+      "especie": "Gato",
+      "idade": 2,
+      "adotado": false,
+      "status": "RESERVADO"
+    }
+  ],
+  "totalPages": 2,
+  "number": 0
+}
